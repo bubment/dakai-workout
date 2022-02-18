@@ -1,0 +1,25 @@
+{
+  "name": "dakai-workout",
+  "version": "1.0.0",
+  "description": "Messenger bot which gives daily workout instructions",
+  "main": "index.js",
+  "scripts": {
+    "start":"node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bubment/dakai-workout.git"
+  },
+  "keywords": [
+    "Dakai",
+    "Trial-task",
+    "Messenger-bot"
+  ],
+  "author": "Medgyesi Attila",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bubment/dakai-workout/issues"
+  },
+  "homepage": "https://github.com/bubment/dakai-workout#readme"
+}
