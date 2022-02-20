@@ -10,7 +10,7 @@ const InteractionSchema = new mongoose.Schema({
     title:{type: String},
     subtitle:{type: String},
     imageUrl:{type: String},
-    options:{type: String},
+    options:[{type: String}],
 })
 
 const Interaction = module.exports = mongoose.model('Interaction', InteractionSchema)
