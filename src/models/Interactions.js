@@ -14,3 +14,10 @@ const InteractionSchema = new mongoose.Schema({
 })
 
 const Interaction = module.exports = mongoose.model('Interaction', InteractionSchema)
+
+const getByName = async (name) => {
+    const result = await Interaction.findOne({name})
+    return result;
+}
+
+module.exports.getByName = getByName;

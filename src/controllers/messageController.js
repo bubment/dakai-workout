@@ -22,8 +22,13 @@ const postWebhook = (req, res) => {
     if (body.object === 'page') {
       body.entry.forEach(function(entry) {
         let webhookEvent = entry.messaging[0];
-        let senderPSID = webhookEvent.sender.id;
-        messageService.sendMessage(senderPSID)
+        let userData = body.user
+        if (webhookEvent.message) {
+          messageService.handleMessage(userData);
+      } else if (webhookEvent.postback) {
+          messageService.handlePostback(userData, webhookEvent.postback);
+      }
+        // messageService.sendMessage(senderPSID)
       });
       res.status(200).send('EVENT_RECEIVED');
     } else {
