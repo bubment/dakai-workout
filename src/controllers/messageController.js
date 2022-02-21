@@ -17,7 +17,7 @@ const getWebhook = (req, res) => {
     }
 };
 
-const postWebhook = (req, res) => {
+const postWebhook = async (req, res) => {
     let body = req.body;
     if (body.object === 'page') {
       body.entry.forEach(function(entry) {

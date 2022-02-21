@@ -18,8 +18,10 @@ const startNewWorkout = async (psid) => {
 }
 
 const comeBackLaterDefault = () => {
-
+    let responseText = { "text": "Come back later if you are in a workoout mood ;)" }
+    return responseText;
 }
+
 const getWarmupPostback = async (workout,excerciseNumber) => {
     let currentInteraction = await Interaction.getByName('warmup')
     let currentExcercise = workout.excercises[excerciseNumber]
