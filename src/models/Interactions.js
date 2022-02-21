@@ -7,7 +7,10 @@ const InteractionSchema = new mongoose.Schema({
         enum: ['postback', 'message'],
         required: true
     },
-    title: { type: String },
+    title: {
+        type: String,
+        required: true
+    },
     subtitle: { type: String },
     imageUrl: { type: String },
     options: [{ type: String }],
