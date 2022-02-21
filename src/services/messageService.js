@@ -47,7 +47,7 @@ const handleMessage = async (userData) => {
     }
 }
 
-const handlePostback = (userData,receivedPostback) => {
+const handlePostback = async (userData,receivedPostback) => {
     let payload = JSON.parse(receivedPostback.payload);
     let messageObj;
     switch (payload.name) {
