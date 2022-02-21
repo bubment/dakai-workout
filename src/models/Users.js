@@ -13,7 +13,7 @@ const UserSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    currentWorkout:{ type: [mongoose.Schema.Types.ObjectId], ref: 'Workout' },
+    currentWorkout:{ type: mongoose.Schema.Types.ObjectId, ref: 'Workout' },
     currentExcercise:{type:Number},
 })
 
