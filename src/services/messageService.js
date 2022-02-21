@@ -54,7 +54,31 @@ const handlePostback = async (userData,receivedPostback) => {
         case "welcome-1":
             switch (payload.option) {
                 case "Yes":
-                    messageObj = await workoutService.startNewWorkout(userData.psid)
+                    // messageObj = await workoutService.startNewWorkout(userData.psid)
+                    messageObj = {
+                        "attachment": {
+                            "type": "template",
+                            "payload": {
+                                "template_type": "generic",
+                                "elements": [{
+                                    "title": "Is this the right picture?",
+                                    "subtitle": "Tap a button to answer.",
+                                    "buttons": [
+                                        {
+                                            "type": "postback",
+                                            "title": "Yes!",
+                                            "payload": "yes",
+                                        },
+                                        {
+                                            "type": "postback",
+                                            "title": "No!",
+                                            "payload": "no",
+                                        }
+                                    ],
+                                }]
+                            }
+                        }
+                    }
                     break;
                 case "No":
                     messageObj = workoutService.comeBackLaterDefault()
