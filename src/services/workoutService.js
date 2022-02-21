@@ -15,7 +15,6 @@ const startNewWorkout = async (psid) => {
     await User.addWorkout(psid,newWorkout._id)
     let warmupPostback = await getWarmupPostback(newWorkout,0)
     return warmupPostback;
-    //MEGNÉZNI EZT A MESSAGE OBJECTET
 }
 
 const comeBackLaterDefault = () => {
@@ -48,7 +47,7 @@ const createPostbackBody = (interaction,imageLink) => {
     let elementItem = {};
     if(interaction.title) elementItem.title = interaction.title;
     if(interaction.subtitle) elementItem.subtitle = interaction.subtitle;
-    // if(imageLink) elementItem.image_url = imageLink;
+    if(imageLink) elementItem.image_url = imageLink;
     if(interaction.options){
         elementItem.buttons = []
         interaction.options.forEach(option=>{
