@@ -54,34 +54,12 @@ const handlePostback = async (userData,receivedPostback) => {
         case "welcome-1":
             switch (payload.option) {
                 case "Yes":
-                    // messageObj = await workoutService.startNewWorkout(userData.psid)
-                    messageObj = {
-                        "attachment": {
-                            "type": "template",
-                            "payload": {
-                                "template_type": "generic",
-                                "elements": [{
-                                    "title": "Is this the right picture?",
-                                    "subtitle": "Tap a button to answer.",
-                                    "buttons": [
-                                        {
-                                            "type": "postback",
-                                            "title": "Yes!",
-                                            "payload": "yes",
-                                        },
-                                        {
-                                            "type": "postback",
-                                            "title": "No!",
-                                            "payload": "no",
-                                        }
-                                    ],
-                                }]
-                            }
-                        }
-                    }
+                    messageObj = await workoutService.startNewWorkout(userData.psid)
+                    sendMessage(userData.psid,messageObj)
                     break;
                 case "No":
                     messageObj = workoutService.comeBackLaterDefault()
+                    sendMessage(userData.psid,messageObj)
                     break;
             }
             break;
@@ -89,7 +67,7 @@ const handlePostback = async (userData,receivedPostback) => {
         default:
             break;
     }
-    sendMessage(userData.psid,messageObj)
+    
     // let response = { "text": `The answer for "${payload.name}"\n\nis:"${payload.option}"` }
     // sendMessage(userData.psid,response)
     
