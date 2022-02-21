@@ -55,6 +55,9 @@ const handlePostback = async (userData,receivedPostback) => {
             switch (payload.option) {
                 case "Yes":
                     messageObj = await workoutService.startNewWorkout()
+                    console.log("-----------------------")
+                    console.log(messageObj)
+                    console.log("-----------------------")
                     break;
                 case "No":
                     messageObj = workoutService.comeBackLaterDefault()
