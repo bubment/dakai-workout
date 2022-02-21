@@ -89,7 +89,7 @@ const handlePostback = async (userData,receivedPostback) => {
                         messageObj = await workoutService.videoInstructions(userData)
                         break;
                     case "Pause":
-                        messageObj = await workoutService.pauseWorkout(psid)
+                        messageObj = await workoutService.pauseQuestion()
                     break;
             }
             break;
@@ -102,7 +102,7 @@ const handlePostback = async (userData,receivedPostback) => {
                         messageObj = await workoutService.videoInstructions(userData)
                         break;
                     case "Pause":
-                        messageObj = await workoutService.pauseWorkout(psid)
+                        messageObj = await workoutService.pauseQuestion()
                         break;
             }
             break;
@@ -115,7 +115,7 @@ const handlePostback = async (userData,receivedPostback) => {
                         messageObj = await workoutService.nextExcercise(userData)
                         break;
                     case "Pause":
-                        messageObj = await workoutService.pauseWorkout(psid)
+                        messageObj = await workoutService.pauseQuestion()
                         break;
             }
             break;
