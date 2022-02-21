@@ -48,7 +48,9 @@ const handleMessage = async (userData) => {
 }
 
 const handlePostback = (userData,receivedPostback) => {
-    
+    let payload = JSON.parse(receivedPostback.payload);
+    let response = { "text": `The answer for "${payload.name}"\n\nis:"${payload.option}"` }
+    sendMessage(userData.psid,response)
 }
 
 
