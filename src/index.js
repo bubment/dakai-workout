@@ -2,6 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const webhookRouter = require("./router")
 const config = require("./config")
+const userDataMiddleware = require("./middlewares/userDataHandler")
 const mongoose = require('mongoose');
 
 mongoose.connect(config.DB_URL)
@@ -12,6 +13,7 @@ mongoose.connect(config.DB_URL)
 const app = express()
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(userDataMiddleware.initUserData)
 
 //Init /webook router
 webhookRouter(app)
