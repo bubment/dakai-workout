@@ -4,10 +4,6 @@ const workoutService = require("./workoutService")
 const request = require('request')
 
 const sendMessage = (senderPSID,response) => {
-    // messengerResponseObject = {
-    //     "text": `This is a test message for you`
-    // }
-
     let reqBody = {
         "recipient": {
             "id": senderPSID
@@ -31,30 +27,30 @@ const sendMessage = (senderPSID,response) => {
 
 const handleMessage = async (userData) => {
     let { isWorkoutInProgress, hasUnfinishedWorkout} = userData
-    if (!isWorkoutInProgress && !hasUnfinishedWorkout) {
-        //Wanna start a new workout?
-        let postbackResult = await workoutService.beginWorkoutQuestion()
-        sendMessage(userData.psid,postbackResult)
-
-        return;
+    let postbackResult;
+    switch (true) {
+        case (!isWorkoutInProgress && !hasUnfinishedWorkout):
+            postbackResult = await workoutService.beginWorkoutQuestion()
+            break;
+        case isWorkoutInProgress:
+            postbackResult = await workoutService.pauseQuestion()
+            break;
+        case hasUnfinishedWorkout:
+            postbackResult = await workoutService.continueQuestion(userData)
+            break;
     }
-    if (isWorkoutInProgress) {
-        //Wanna pause?
-    }
-    if(hasUnfinishedWorkout){
-        //Wanna continue or start a new?
-        return
-    }
+    sendMessage(userData.psid,postbackResult)
 }
 
 const handlePostback = async (userData,receivedPostback) => {
     let payload = JSON.parse(receivedPostback.payload);
+    let { psid } = userData
     let messageObj;
     switch (payload.name) {
         case "welcome-1":
             switch (payload.option) {
                 case "Yes":
-                    messageObj = await workoutService.startNewWorkout(userData.psid)
+                    messageObj = await workoutService.startNewWorkout(psid)
                     break;
                 case "No":
                     messageObj = workoutService.comeBackLaterDefault()
@@ -62,14 +58,85 @@ const handlePostback = async (userData,receivedPostback) => {
                     break;
             }
             break;
-    
+            case "pause-workout":
+                switch (payload.option) {
+                    case "Yes":
+                        messageObj = await workoutService.pauseWorkout(psid)
+                        break;
+                    case "No":
+                        messageObj = await workoutService.beginExcercise(userData)
+                        break;
+            }
+            break;
+            case "welcome-2":
+                switch (payload.option) {
+                    case "Continue":
+                        messageObj = await workoutService.continueNewWorkout(psid)
+                        break;
+                    case "Start new":
+                        messageObj = await workoutService.startNewWorkout(psid)
+                        break;
+                    case "Just leave":
+                        messageObj = workoutService.comeBackLaterDefault()
+                    break;
+            }
+            break;
+            case "warmup":
+                switch (payload.option) {
+                    case "Start":
+                        messageObj = await workoutService.beginExcercise(userData)
+                        break;
+                    case "Video instructions":
+                        messageObj = await workoutService.videoInstructions(userData)
+                        break;
+                    case "Pause":
+                        messageObj = await workoutService.pauseQuestion()
+                    break;
+            }
+            break;
+            case "do-excercise":
+                switch (payload.option) {
+                    case "Next":
+                        messageObj = await workoutService.nextExcercise(userData)
+                        break;
+                    case "Video Instructions":
+                        messageObj = await workoutService.videoInstructions(userData)
+                        break;
+                    case "Pause":
+                        messageObj = await workoutService.pauseQuestion()
+                        break;
+            }
+            break;
+            case "excercise-tutorial-video":
+                switch (payload.option) {
+                    case "Start excercise":
+                        messageObj = await workoutService.beginExcercise(userData)
+                        break;
+                    case "Skip excercise":
+                        messageObj = await workoutService.nextExcercise(userData)
+                        break;
+                    case "Pause":
+                        messageObj = await workoutService.pauseQuestion()
+                        break;
+            }
+            break;
+            case "workout-finish":
+                switch (payload.option) {
+                    case "Good":
+                        messageObj = await workoutService.byeMessage()
+                        break;
+                    case "Avarage":
+                        messageObj = await workoutService.byeMessage()
+                        break;
+                    case "Bad":
+                        messageObj = await workoutService.byeMessage()
+                        break;
+            }
+            break;
         default:
             break;
     }
-    sendMessage(userData.psid,messageObj)
-    // let response = { "text": `The answer for "${payload.name}"\n\nis:"${payload.option}"` }
-    // sendMessage(userData.psid,response)
-    
+    sendMessage(psid,messageObj)    
 }
 
 

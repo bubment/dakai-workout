@@ -24,4 +24,10 @@ const getRandomWorkout = async () => {
     return result;
 }
 
+const getById = async (_id) => {
+    const result = await Workout.findOne({_id:new mongoose.Types.ObjectId(_id)})
+    return result;
+}
+
 module.exports.getRandomWorkout = getRandomWorkout;
+module.exports.getById = getById;
