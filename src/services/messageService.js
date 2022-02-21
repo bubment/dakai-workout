@@ -54,7 +54,6 @@ const handlePostback = async (userData, receivedPostback) => {
                     break;
                 case "No":
                     messageObj = workoutService.comeBackLaterDefault()
-
                     break;
             }
             break;
