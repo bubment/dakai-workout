@@ -55,6 +55,43 @@ const handlePostback = async (userData,receivedPostback) => {
             switch (payload.option) {
                 case "Yes":
                     messageObj = await workoutService.startNewWorkout(userData.psid)
+                    messageObj = {
+                        "attachment": {
+                            "type": "template",
+                            "payload": {
+                                "template_type": "generic",
+                                "elements": [
+                                    {
+                                        title: 'Prepare for push up!',
+                                        subtitle: 'You have to warm up your arms!',
+                                        image_url: 'https://www.spotebi.com/wp-content/uploads/2014/10/shoulder-stretch-exercise-illustration.jpg',
+                                        buttons: [
+                                          {
+                                            type: 'postback',
+                                            title: 'Start',
+                                            payload: '{"name":"warmup","option":"Start"}'
+                                          },
+                                          {
+                                            type: 'postback',
+                                            title: 'Video instructions',
+                                            payload: '{"name":"warmup","option":"Video instructions"}'
+                                          },
+                                          {
+                                            type: 'postback',
+                                            title: 'Pause',
+                                            payload: '{"name":"warmup","option":"Pause"}'
+                                          },
+                                          {
+                                            type: 'postback',
+                                            title: 'Skip',
+                                            payload: '{"name":"warmup","option":"Skip"}'
+                                          }
+                                        ]
+                                      }
+                                ]
+                            }
+                        }
+                    }
                     sendMessage(userData.psid,messageObj)
                     break;
                 case "No":
