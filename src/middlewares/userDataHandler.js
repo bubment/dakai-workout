@@ -1,6 +1,6 @@
 const User = require("../models/Users")
 
-const initUserData = async (req,res,next) => {
+const initUserData = async (req, res, next) => {
     let senderPSID = null;
     try {
         senderPSID = req.body.entry[0].messaging[0].sender.id

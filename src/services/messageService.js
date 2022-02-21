@@ -3,7 +3,7 @@ const PAGE_ACCESS_TOKEN = config.PAGE_ACCESS_TOKEN;
 const workoutService = require("./workoutService")
 const request = require('request')
 
-const sendMessage = (senderPSID,response) => {
+const sendMessage = (senderPSID, response) => {
     let reqBody = {
         "recipient": {
             "id": senderPSID
@@ -26,7 +26,7 @@ const sendMessage = (senderPSID,response) => {
 }
 
 const handleMessage = async (userData) => {
-    let { isWorkoutInProgress, hasUnfinishedWorkout} = userData
+    let { isWorkoutInProgress, hasUnfinishedWorkout } = userData
     let postbackResult;
     switch (true) {
         case (!isWorkoutInProgress && !hasUnfinishedWorkout):
@@ -39,10 +39,10 @@ const handleMessage = async (userData) => {
             postbackResult = await workoutService.continueQuestion(userData)
             break;
     }
-    sendMessage(userData.psid,postbackResult)
+    sendMessage(userData.psid, postbackResult)
 }
 
-const handlePostback = async (userData,receivedPostback) => {
+const handlePostback = async (userData, receivedPostback) => {
     let payload = JSON.parse(receivedPostback.payload);
     let { psid } = userData
     let messageObj;
@@ -54,89 +54,89 @@ const handlePostback = async (userData,receivedPostback) => {
                     break;
                 case "No":
                     messageObj = workoutService.comeBackLaterDefault()
-                    
+
                     break;
             }
             break;
-            case "pause-workout":
-                switch (payload.option) {
-                    case "Yes":
-                        messageObj = await workoutService.pauseWorkout(psid)
-                        break;
-                    case "No":
-                        messageObj = await workoutService.beginExcercise(userData)
-                        break;
-            }
-            break;
-            case "welcome-2":
-                switch (payload.option) {
-                    case "Continue":
-                        messageObj = await workoutService.continueWorkout(userData)
-                        break;
-                    case "Start new":
-                        messageObj = await workoutService.startNewWorkout(psid)
-                        break;
-                    case "Just leave":
-                        messageObj = workoutService.comeBackLaterDefault()
+        case "pause-workout":
+            switch (payload.option) {
+                case "Yes":
+                    messageObj = await workoutService.pauseWorkout(psid)
+                    break;
+                case "No":
+                    messageObj = await workoutService.beginExcercise(userData)
                     break;
             }
             break;
-            case "warmup":
-                switch (payload.option) {
-                    case "Start":
-                        messageObj = await workoutService.beginExcercise(userData)
-                        break;
-                    case "Video instructions":
-                        messageObj = await workoutService.videoInstructions(userData)
-                        break;
-                    case "Pause":
-                        messageObj = await workoutService.pauseQuestion()
+        case "welcome-2":
+            switch (payload.option) {
+                case "Continue":
+                    messageObj = await workoutService.continueWorkout(userData)
+                    break;
+                case "Start new":
+                    messageObj = await workoutService.startNewWorkout(psid)
+                    break;
+                case "Just leave":
+                    messageObj = workoutService.comeBackLaterDefault()
                     break;
             }
             break;
-            case "do-excercise":
-                switch (payload.option) {
-                    case "Next":
-                        messageObj = await workoutService.nextExcercise(userData)
-                        break;
-                    case "Video Instructions":
-                        messageObj = await workoutService.videoInstructions(userData)
-                        break;
-                    case "Pause":
-                        messageObj = await workoutService.pauseQuestion()
-                        break;
+        case "warmup":
+            switch (payload.option) {
+                case "Start":
+                    messageObj = await workoutService.beginExcercise(userData)
+                    break;
+                case "Video instructions":
+                    messageObj = await workoutService.videoInstructions(userData)
+                    break;
+                case "Pause":
+                    messageObj = await workoutService.pauseQuestion()
+                    break;
             }
             break;
-            case "excercise-tutorial-video":
-                switch (payload.option) {
-                    case "Start excercise":
-                        messageObj = await workoutService.beginExcercise(userData)
-                        break;
-                    case "Skip excercise":
-                        messageObj = await workoutService.nextExcercise(userData)
-                        break;
-                    case "Pause":
-                        messageObj = await workoutService.pauseQuestion()
-                        break;
+        case "do-excercise":
+            switch (payload.option) {
+                case "Next":
+                    messageObj = await workoutService.nextExcercise(userData)
+                    break;
+                case "Video Instructions":
+                    messageObj = await workoutService.videoInstructions(userData)
+                    break;
+                case "Pause":
+                    messageObj = await workoutService.pauseQuestion()
+                    break;
             }
             break;
-            case "workout-finish":
-                switch (payload.option) {
-                    case "Good":
-                        messageObj = await workoutService.byeMessage()
-                        break;
-                    case "Avarage":
-                        messageObj = await workoutService.byeMessage()
-                        break;
-                    case "Bad":
-                        messageObj = await workoutService.byeMessage()
-                        break;
+        case "excercise-tutorial-video":
+            switch (payload.option) {
+                case "Start excercise":
+                    messageObj = await workoutService.beginExcercise(userData)
+                    break;
+                case "Skip excercise":
+                    messageObj = await workoutService.nextExcercise(userData)
+                    break;
+                case "Pause":
+                    messageObj = await workoutService.pauseQuestion()
+                    break;
+            }
+            break;
+        case "workout-finish":
+            switch (payload.option) {
+                case "Good":
+                    messageObj = await workoutService.byeMessage()
+                    break;
+                case "Avarage":
+                    messageObj = await workoutService.byeMessage()
+                    break;
+                case "Bad":
+                    messageObj = await workoutService.byeMessage()
+                    break;
             }
             break;
         default:
             break;
     }
-    sendMessage(psid,messageObj)    
+    sendMessage(psid, messageObj)
 }
 
 

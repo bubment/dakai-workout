@@ -6,10 +6,10 @@ const userDataMiddleware = require("./middlewares/userDataHandler")
 const mongoose = require('mongoose');
 
 mongoose.connect(config.DB_URL)
-.catch(error => {
-  console.log(`Mongoose connection has the followin error:\n\n${error}`)
-  process.exit(1)
-});
+  .catch(error => {
+    console.log(`Mongoose connection has the followin error:\n\n${error}`)
+    process.exit(1)
+  });
 const app = express()
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

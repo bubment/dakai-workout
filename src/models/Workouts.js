@@ -1,16 +1,16 @@
 const mongoose = require('mongoose')
 
 const WorkoutSchema = new mongoose.Schema({
-    excercises : [
+    excercises: [
         {
-            title:{type: String},
-            warmupImage:{type: String},
-            warmupBodypart:{type: String},
-            tutorialVideoLink:{type: String},
-            excerciseIllustrationImage:{type: String},
-            numberOfSets:{type: Number},
-            numberOfRepetitions:{type: Number},
-            breakBetweenSets:{type: Number},
+            title: { type: String },
+            warmupImage: { type: String },
+            warmupBodypart: { type: String },
+            tutorialVideoLink: { type: String },
+            excerciseIllustrationImage: { type: String },
+            numberOfSets: { type: Number },
+            numberOfRepetitions: { type: Number },
+            breakBetweenSets: { type: Number },
         }
     ]
 })
@@ -25,7 +25,7 @@ const getRandomWorkout = async () => {
 }
 
 const getById = async (_id) => {
-    const result = await Workout.findOne({_id:new mongoose.Types.ObjectId(_id)})
+    const result = await Workout.findOne({ _id: new mongoose.Types.ObjectId(_id) })
     return result;
 }
 

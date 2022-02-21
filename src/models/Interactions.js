@@ -1,22 +1,22 @@
 const mongoose = require('mongoose')
 
 const InteractionSchema = new mongoose.Schema({
-    name:{type: String},
-    type:{
+    name: { type: String },
+    type: {
         type: String,
         enum: ['postback', 'message'],
-        required:true
+        required: true
     },
-    title:{type: String},
-    subtitle:{type: String},
-    imageUrl:{type: String},
-    options:[{type: String}],
+    title: { type: String },
+    subtitle: { type: String },
+    imageUrl: { type: String },
+    options: [{ type: String }],
 })
 
 const Interaction = module.exports = mongoose.model('Interaction', InteractionSchema)
 
 const getByName = async (name) => {
-    const result = await Interaction.findOne({name})
+    const result = await Interaction.findOne({ name })
     return result;
 }
 
