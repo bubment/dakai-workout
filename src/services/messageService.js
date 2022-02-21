@@ -64,7 +64,7 @@ const handlePostback = async (userData,receivedPostback) => {
                                     {
                                         title: 'Prepare for push up!',
                                         subtitle: 'You have to warm up your arms!',
-                                        image_url: 'https://www.spotebi.com/wp-content/uploads/2014/10/shoulder-stretch-exercise-illustration.jpg',
+                                        // image_url: 'https://www.spotebi.com/wp-content/uploads/2014/10/shoulder-stretch-exercise-illustration.jpg',
                                         buttons: [
                                           {
                                             type: 'postback',
