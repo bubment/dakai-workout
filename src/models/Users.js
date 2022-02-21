@@ -24,4 +24,10 @@ const getByPsid = async (psid) => {
     return result;
 }
 
+const addWorkout = async (psid,workoutId) => {
+    const result = await User.updateOne({psid},{ $set: { currentWorkout: workoutId, currentExcercise:0, isWorkoutInProgress:true } })
+    return result;
+}
+
 module.exports.getByPsid = getByPsid;
+module.exports.addWorkout = addWorkout;
