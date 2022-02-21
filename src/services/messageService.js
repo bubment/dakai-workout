@@ -49,8 +49,26 @@ const handleMessage = async (userData) => {
 
 const handlePostback = (userData,receivedPostback) => {
     let payload = JSON.parse(receivedPostback.payload);
-    let response = { "text": `The answer for "${payload.name}"\n\nis:"${payload.option}"` }
-    sendMessage(userData.psid,response)
+    let messageObj;
+    switch (payload.name) {
+        case "welcome-1":
+            switch (payload.option) {
+                case "Yes":
+                    messageObj = await workoutService.startNewWorkout()
+                    break;
+                case "No":
+                    messageObj = workoutService.comeBackLaterDefault()
+                    break;
+            }
+            break;
+    
+        default:
+            break;
+    }
+    sendMessage(userData.psid,messageObj)
+    // let response = { "text": `The answer for "${payload.name}"\n\nis:"${payload.option}"` }
+    // sendMessage(userData.psid,response)
+    
 }
 
 
