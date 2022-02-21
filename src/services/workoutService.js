@@ -85,7 +85,7 @@ const nextExcercise = async (userData) => {
         //TODO: ITT MEGNÉZNI, HOGY MIT RETURNOL AZ UPDATEONE (és ha jó azt használni a függvényhíváshoz)
         await User.increaseCurrentExcercise(userData.psid)
         userData.currentExcercise++;
-        postbackBody = await getWarmupPostback(currentWorkout,(userData.currentExcercise+1))
+        postbackBody = await getWarmupPostback(currentWorkout,userData.currentExcercise)
     }
 }
 
