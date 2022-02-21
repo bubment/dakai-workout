@@ -87,6 +87,7 @@ const nextExcercise = async (userData) => {
         userData.currentExcercise++;
         postbackBody = await getWarmupPostback(currentWorkout,userData.currentExcercise)
     }
+    return postbackBody;
 }
 
 const videoInstructions = async (userData) => {
