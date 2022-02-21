@@ -5,14 +5,14 @@ const initUserData = async (req,res,next) => {
     try {
         senderPSID = req.body.entry[0].messaging[0].sender.id
     } catch (error) {
-        //TEMPORARY
+        //TEST CODE
         //---------------------------------
-        senderPSID = 7867867876
+        // senderPSID = 7867867876
         //---------------------------------
-        //FINAL
+        //LIVE CODE
         //---------------------------------
-        // next()
-        // return;
+        next()
+        return;
         //---------------------------------
     }
     currentUser = await User.getByPsid(senderPSID)
