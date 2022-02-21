@@ -27,22 +27,19 @@ const sendMessage = (senderPSID,response) => {
 
 const handleMessage = async (userData) => {
     let { isWorkoutInProgress, hasUnfinishedWorkout} = userData
-    if (!isWorkoutInProgress && !hasUnfinishedWorkout) {
-        //Wanna start a new workout?
-        let postbackResult = await workoutService.beginWorkoutQuestion()
-        sendMessage(userData.psid,postbackResult)
-        return;
+    let postbackResult;
+    switch (true) {
+        case (!isWorkoutInProgress && !hasUnfinishedWorkout):
+            postbackResult = await workoutService.beginWorkoutQuestion()
+            break;
+        case isWorkoutInProgress:
+            postbackResult = await workoutService.pauseQuestion()
+            break;
+        case hasUnfinishedWorkout:
+            postbackResult = await workoutService.continueQuestion(userData)
+            break;
     }
-    if (isWorkoutInProgress) {
-        let postbackResult = await workoutService.pauseQuestion()
-        sendMessage(userData.psid,postbackResult)
-        return;
-        //Wanna pause?
-    }
-    if(hasUnfinishedWorkout){
-        //Wanna continue or start a new?
-        return
-    }
+    sendMessage(userData.psid,postbackResult)
 }
 
 const handlePostback = async (userData,receivedPostback) => {
@@ -73,13 +70,13 @@ const handlePostback = async (userData,receivedPostback) => {
             case "welcome-2":
                 switch (payload.option) {
                     case "Continue":
-                        
+                        messageObj = await workoutService.continueNewWorkout(psid)
                         break;
                     case "Start new":
-                        
+                        messageObj = await workoutService.startNewWorkout(psid)
                         break;
                     case "Just leave":
-                    
+                        messageObj = workoutService.comeBackLaterDefault()
                     break;
             }
             break;
