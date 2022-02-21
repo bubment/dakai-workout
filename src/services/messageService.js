@@ -71,7 +71,7 @@ const handlePostback = async (userData,receivedPostback) => {
             case "welcome-2":
                 switch (payload.option) {
                     case "Continue":
-                        messageObj = await workoutService.continueNewWorkout(psid)
+                        messageObj = await workoutService.continueWorkout(psid)
                         break;
                     case "Start new":
                         messageObj = await workoutService.startNewWorkout(psid)
